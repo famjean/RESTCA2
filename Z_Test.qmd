@@ -1,0 +1,63 @@
+---
+format: html
+number-sections: FALSE
+bibliography: Z_Ref.bib
+csl: Z_Style_apa.csl
+---
+```{r}
+#| include: false
+c(  "flextable", "knitr"
+) -> 
+  PackagesNames1 ;
+
+for (a in 1:length( PackagesNames1 ) )
+{
+  try( find.package( PackagesNames1[a]), silent = TRUE ) -> test ;
+  
+  if ( class( test ) == "try-error" )
+  { print( PackagesNames1[a] ) ; 
+    install.packages(  PackagesNames1[a] ) ;
+  } 
+}
+
+require( flextable )
+
+load( "ObjectsForQmd.RData")
+
+knitr::opts_chunk$set("ft.shadow" = FALSE)
+use_df_printer()
+
+```
+
+# Methods  
+
+**Study design**   
+This study forms part of the RESTCA project. The RESTCA project is a cross-sectional, descriptive, multicentre study recruiting participants diagnosed with an eating disorder (ED). The project aimed to collect information on social media usage, eating disorder (ED) characteristics, lifestyle, psychiatric comorbidities, and care. It took place at three centres in the Hauts-de-France region of France between January 2024 and January 2025.      
+
+The RESTCA project was approved by the Committee for the Protection of Persons under the reference number 2023-A02380-45. Participants received a letter providing information about the study's objectives. Major patients gave their written consent. Both minor patients and their parents completed a written consent form.    
+
+**Population**  
+The inclusion criteria were: participants had to be aged between 12 and 30 years; have been clinically diagnosed with an eating disorder (ED) by a psychiatrist; and have been monitored for more than six months for an eating disorder.   
+
+Exclusion criteria included: individuals with autism spectrum disorder, mental retardation, attention deficit disorder with or without hyperactivity, psychotic disorder, or bipolar disorder, individuals who did not understand spoken French and were unable to read it, individuals with a severe sensory impairment that limited or prevented them from completing the questionnaires (visual impairment, deafness, etc.), individuals hospitalized full-time, being pregnant, being homeless, and being incarcerated.   
+
+**Data collection**   
+Participants were asked to complete a semi-structured questionnaire. The DSM-5 criteria were evaluated for eating disorders (EDs) and comorbidities. Questions about socio-demographic characteristics, mental health, and care were included. Participants completed the 26-item Eating Attitudes Test (EAT-26) (Garner et al., 1982; Leichner et al., 1994). This scale is a self-report questionnaire that measures a wide range of eating disorder symptoms. The questionnaire included questions about clinical data, such as height (m), weight (kg) and calculation of body mass index (BMI) (kg/m²).
+Details of the questions and response options can be found in the supplementary material.   
+
+**Barriers to treatment**  
+Participants were asked an open-response question in French: *'Quelque chose vous a-t-il empêché d’obtenir l’aide dont vous aviez besoin au début de votre prise en soin ?  (regard des autres, argent, peur de grossir, stigma, religion, autres… ). Détaillez.'*; English translation: *'Did anything prevent you from getting the help you needed at the beginning of your treatment? (other people's opinions, money, fear of gaining weight, stigma, religion, other reasons, etc.). Please provide details.'*.   
+
+**Statistical method**   
+*Text preprocessing*   
+Missing data were removed, and analyses were conducted using available cases. The textual responses were tokenized. Then punctuation, numbers, special characters, capital letters, and meaningless words were removed. Next we applied a lemmatization (process of transformed an inflected word to his canonical form).   
+
+*Natural language processing*
+First, we describe the responses by computing the word count and calculating the TTR (type-token ratio, i.e. the ratio of word types to words) and sparsity. For a response, sparsity is the percentage of tokens that do not appear in the other response; for the whole set of responses, it is the average sparsity.
+
+Secondly, we performed topic modelling (TP). We chose the biterm topic model because it is adapted to short texts, such as the responses we studied, and outperforms other TP techniques [@yanBitermTopicModel2013]. In the supplementary material, we display the results of latent dirichlet allocation.   
+
+Thirdly, we used a generative pre-trained transformers (GPT) to abnalysis automatically the responses set. GPT is a type of large language modeling that is used to generate text from a prompt. Raw data and not preprocessed data were used for LLM. The prompt was: "xxxxxxxxxxxxxxx". 
+
+More details on methods are presented in supplementary material.    
+

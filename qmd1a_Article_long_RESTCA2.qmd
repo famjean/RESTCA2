@@ -1,0 +1,231 @@
+---
+title: "Topic Modeling and Analysis based on Generative Pre-trained Transformers of Barriers to Treatment for Eating Disorders: An Exploratory Study" 
+subtitle: "Short title: Barriers to treatment"
+format:
+  docx:
+    reference-doc: Z_Template_MWord.docx
+    toc: false
+    toc-depth: 4
+    toc-title: "Table of contents"
+    number-sections: FALSE
+bibliography: Z_Ref.bib
+csl: Z_Style_apa.csl
+execute:
+  echo: false
+---
+```{r}
+#| include: false
+c(  "flextable"
+) -> 
+  PackagesNames1 ;
+
+for (a in 1:length( PackagesNames1 ) )
+{
+  try( find.package( PackagesNames1[a]), silent = TRUE ) -> test ;
+  
+  if ( class( test ) == "try-error" )
+  { print( PackagesNames1[a] ) ; 
+    install.packages(  PackagesNames1[a] ) ;
+  } 
+}
+
+require( flextable )
+
+load( "ObjectsForQmd.RData")
+
+knitr::opts_chunk$set("ft.shadow" = FALSE)
+use_df_printer()
+
+```
+
+F.A.M. Jean, MD PhD^1,2^    
+Clara Dupire, MD^1^    
+Antoine Lamer, PhD^3^   
+Marion Hendrickx, MD PhD^4^     
+Olivier Cottencin, MD PhD^5,6^    
+
+^1^: Dr Jean Eric Techer Hospital, Department of Child and Adolescent Psychiatry, Calais, Hauts-de-France, France    
+^2^: Lille Neuroscience et cognition, PSI team, Institut national de la santé et de la  recherche médicale (INSERM), Centre hospitalier universitaire de Lille, Université de Lille, UMR 1172, Lille, Hauts-de-France, France    
+^3^Fédération régionale de recherche en santé mentale et psychiatrie (F2RSM Psy), Hauts-de-France, Saint-André-Lez-Lille, Hauts-de-France, France    
+^4^: Hôpital Saint Vincent de Paul, Lille, Hauts-de-France, France     
+^5^ : Centre Hospitalier Universitaire de Lille, Lille, Hauts-de-France, France    
+^6^ : Université de Lille, Hauts-de-France, Lille, France   
+
+**Corresponding Author**   
+Dr François A. M. Jean, MD PhD     
+Unité de Santé Mentale Dr Georges Cabal - Centre Hospitalier de Calais    
+575 Grande Rue du Petit Courgain, BP 339, 62107 Calais Cedex, France    
+Tel: 0033.3.21.46.33.62   
+Fax: 0033.3.21.46.89.93     
+Email: F.Jean@ch-calais.fr    
+
+**Word count: XXX**     
+**Table count: XXX**  
+**Figure count:  XXX**  
+
+{{< pagebreak >}}
+
+
+## Abstrat 1   
+**Introduction:**    
+**Methods:**  
+**Results:**  
+**Conclusion:**  
+
+**Word count: XXXXXXX**  
+
+## Abstrat 2   
+ 
+
+**Word count: XXXXXXX**  
+
+
+
+## Key words  1
+Eating disorders, barriers, topic modeling, generative pre-trained transformers
+
+
+{{< pagebreak >}}
+
+
+## Highlights 1    
+
+
+
+{{< pagebreak >}}
+
+
+**Funding statement**   
+No funding   
+
+**Conflict of interest disclosure**    
+None   
+
+**Ethics approval statement**   
+The RESTCA study protocol was submitted to the ethics committee in accordance with French procedure and assigned to the South-East I Human Protection Committee (CPP) under number 2023-A02380-45. The RESTCA study is a type 3 observational study, according to the Jardé law. A declaration of compliance with the CNIL (Commission Nationale d'Informatique et des Libertés) was made and registered under number YPU33345426.   
+
+**Participant consent statement**    
+All participants completed an informed consent form with consent for publication. Parental and child consent was required if the patients were minors. Participants were free to stop the study at any time.   
+
+**Data availability statement**    
+The data that support the findings of this study are available from the authors. Considering French law for numeric data, restrictions apply to the availability of these data.       
+
+**Study registration**   
+This study was not preregistered.   
+
+**Permission to reproduce material from other sources**     
+Not applicable    
+
+**AI use statement**   
+We used DeepL Write (https://www.deepl.com/en/write/) to correct English language errors.   
+
+**Author contributions**     
+FAMJ: Conceptualization (equal); Data Curation (lead); Formal Analysis;  Investigation (equal); Methodology (lead); Project Administration; Resources; Software; Validation (equal); Writing – Original Draft Preparation; Writing – Review & Editing (equal);   
+CD: Conceptualization (equal); Data Curation (supporting); Investigation (equal); Validation (equal); Writing – Review & Editing (equal);   
+AL: Conceptualization (supporting); Methodology (supporting); Validation (equal); Writing – Review & Editing (equal);   
+MH: Conceptualization (supporting); Investigation (supporting); Validation (equal); Writing – Review & Editing (equal);   
+OC: Conceptualization (supporting); Investigation (supporting); Validation (equal); Writing – Review & Editing (equal);   
+
+**Acknowledgments**   
+We would like to thank the participants for their commitment to this project, as well as the clinical research department of the Calais Hospital Center.   
+
+{{< pagebreak >}}
+
+
+**Objective**   
+The objective was to explore the barriers to treatment for patients with EDs by considering their narratives. The secondary objective was to explore differences in text analysis between LLM and NLP.   
+
+# Methods  
+**Study design**   
+This study forms part of the RESTCA project. The RESTCA project is a cross-sectional, descriptive, multicentre study recruiting participants diagnosed with an eating disorder (ED). The project aimed to collect information on social media usage, eating disorder (ED) characteristics, lifestyle, psychiatric comorbidities, and care. It took place at three centres in the Hauts-de-France region of France between January 2024 and January 2025.      
+
+The RESTCA project was approved by the Committee for the Protection of Persons under the reference number 2023-A02380-45. Participants received a letter providing information about the study's objectives. Major patients gave their written consent. Both minor patients and their parents completed a written consent form.    
+
+**Population**  
+The inclusion criteria were: participants had to be aged between 12 and 30 years; have been clinically diagnosed with an eating disorder (ED) by a psychiatrist; and have been monitored for more than six months for an eating disorder.   
+
+Exclusion criteria included: individuals with autism spectrum disorder, mental retardation, attention deficit disorder with or without hyperactivity, psychotic disorder, or bipolar disorder, individuals who did not understand spoken French and were unable to read it, individuals with a severe sensory impairment that limited or prevented them from completing the questionnaires (visual impairment, deafness, etc.), individuals hospitalized full-time, being pregnant, being homeless, and being incarcerated.   
+
+**Data collection**   
+Participants were asked to complete a semi-structured questionnaire. The DSM-5 criteria were evaluated for eating disorders (EDs) and comorbidities. Questions about socio-demographic characteristics, mental health, and care were included. Participants completed the 26-item Eating Attitudes Test (EAT-26) (Garner et al., 1982; Leichner et al., 1994). This scale is a self-report questionnaire that measures a wide range of eating disorder symptoms. The questionnaire included questions about clinical data, such as height (m), weight (kg) and calculation of body mass index (BMI) (kg/m²).
+Details of the questions and response options can be found in the supplementary material.   
+
+**Barriers to treatment**  
+Participants were asked an open-response question in French: *'Quelque chose vous a-t-il empêché d’obtenir l’aide dont vous aviez besoin au début de votre prise en soin ?  (regard des autres, argent, peur de grossir, stigma, religion, autres… ). Détaillez.'*; English translation: *'Did anything prevent you from getting the help you needed at the beginning of your treatment? (other people's opinions, money, fear of gaining weight, stigma, religion, other reasons, etc.). Please provide details.'*.   
+
+**Statistical method**   
+*Description*   
+We described numeric variables using the mean and standard deviation, and categorical variables using percentages and counts. We analysed the sample with no missing values for question about barriers to treatment.  
+
+*Textual responses preprocessing*   
+The set of textual responses was tokenized excluding missing values. Then punctuation, numbers, special characters, capital letters, and meaningless words were removed. Next we applied a lemmatization (process of transformed an inflected word to his canonical form).   
+
+*Natural language processing*
+First, we describe the responses by computing the word count and calculating the TTR (type-token ratio, i.e. the ratio of number word types to number of words) and sparsity. For a response, sparsity is the percentage of tokens that do not appear in the other responses; for the set of responses, it is the average sparsity.
+
+Secondly, we conducted topic modelling (TP) on the preprocessed set of responses. TP is a statistical model used to discover hidden semantic structures within a body of text. We chose the biterm topic model because it is adapted to short texts, such as the responses we studied, and outperforms other TP techniques [@yanBitermTopicModel2013]. In the supplementary material, we display the results of other techniques.   
+
+Thirdly, we used Generative Pre-trained Transformers (GPT) to automatically analyse the set of responses. GPT is a type of large language model used to generate text from a prompt. Raw, rather than pre-processed, data was used for the LLM. The prompt was: "xxxxxxxxxxxxxxx". 
+
+More details on methods are presented in supplementary material.   
+
+
+# Results   
+
+**Textual responses description**  
+
+**Topic modeling**  
+
+**Analysis using generative pre-trained transformers**  
+
+Insert Table 1 about here.    
+Insert Figure 1 about here.    
+
+
+# Discussion  
+
+**Summary of findings**     
+
+**Strengths and limitations**  
+
+**Comparison with other studies and interpretation**  
+
+**Implications, unanswered questions and future research**    
+
+**Conclusion**   
+
+
+{{< pagebreak >}}
+
+
+**Table 1: **    
+
+**Table 2: **     
+
+**Table 3: **    
+
+
+**Figure 1: **  
+
+**Figure 2: **  
+
+**Figure 3: **   
+
+
+
+`{r} code '  
+
+```{r}
+#| echo: false
+tab1
+```
+
+![](Files_For_Article/DAG1.png)
+
+
+{{< pagebreak >}}
+
+
+# References {-}    
+::: {#refs}
+:::

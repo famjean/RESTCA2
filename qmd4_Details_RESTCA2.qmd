@@ -1,0 +1,53 @@
+---
+format:
+  docx:
+    reference-doc: Z_Template_MWord.docx
+---
+
+
+
+# Co-authors   
+
+
+
+# Submission process   
+
+**Journal 1:**      
+**Submission date:**       
+
+**Journal 2:**      
+**Submission date:**      
+
+**Journal 3:**      
+**Submission date:**      
+
+
+{{< pagebreak >}}
+
+
+# Reviewers     
+
+**Fisrt name:**
+**Last name:**
+**Email:**
+**Institution:**
+**Reason for inclusion:**
+
+**Fisrt name:**
+**Last name:**
+**Email:**
+**Institution:**
+**Reason for inclusion:**
+
+**Fisrt name:**
+**Last name:**
+**Email:**
+**Institution:**
+**Reason for inclusion:**
+
+**Fisrt name:**
+**Last name:**
+**Email:**
+**Institution:**
+**Reason for inclusion:**
+  

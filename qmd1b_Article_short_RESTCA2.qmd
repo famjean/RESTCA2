@@ -1,0 +1,190 @@
+---
+title: "XXXXX" 
+format:
+  docx:
+    reference-doc: Z_Template_MWord.docx
+    toc: false
+    toc-depth: 4
+    toc-title: "Table of contents"
+    number-sections: false
+bibliography: Z_Ref.bib
+csl: Z_Style_apa.csl
+execute:
+  echo: false
+---
+```{r}
+#| include: false
+c(  "flextable"
+) -> 
+  PackagesNames1 ;
+
+for (a in 1:length( PackagesNames1 ) )
+{
+  try( find.package( PackagesNames1[a]), silent = TRUE ) -> test ;
+  
+  if ( class( test ) == "try-error" )
+  { print( PackagesNames1[a] ) ; 
+    install.packages(  PackagesNames1[a] ) ;
+  } 
+}
+
+require( flextable )
+
+load( "ObjectsForQmd.RData")
+
+knitr::opts_chunk$set("ft.shadow" = FALSE)
+use_df_printer()
+
+```
+
+F.A.M. Jean, MD PhD^1^   
+
+^1^ : Dr Jean Eric Techer Hospital, Department of child and adolescent Psychiatry, Calais, France    
+
+**Corresponding Author**   
+Dr François A. M. Jean, MD PhD    
+Unité de Santé Mentale Dr Georges Cabal - Centre Hospitalier de Calais   
+575 Grande Rue du Petit Courgain, BP 339, 62107 Calais Cedex, France   
+Tel: 0033.3.21.46.33.62   
+Fax: 0033.3.21.46.89.93     
+Email: F.Jean@ch-calais.fr    
+
+**Word count: XXX**     
+**Table count: XXX**  
+**Figure count:  XXX**  
+
+
+{{< pagebreak >}}
+
+
+## Abstrat 1   
+**Introduction:**    
+**Methods:**  
+**Results:**  
+**Discussion:**  
+
+**Word count: XXXXXXX**  
+
+## Abstrat 2   
+ 
+
+**Word count: XXXXXXX**  
+
+
+
+## Key words  
+
+
+{{< pagebreak >}}
+
+
+## Highlights 1      
+
+
+{{< pagebreak >}}
+
+
+**Funding statement**   
+
+**Conflict of interest disclosure**    
+
+**Ethics approval statement**   
+
+**Participant consent statement**    
+
+**Data availability statement**   
+
+**Study registration**   
+
+**Author contributions**     
+
+**Acknowledgments**   
+
+
+{{< pagebreak >}}
+
+
+**First topic**  
+
+**Second topic**  
+
+**Hypothesis and benefits**   
+
+**Lacks**  
+
+**Aim**   
+
+# Methods  
+
+**Study design**  
+
+**Population**  
+
+**Outcome**  
+
+**Main predictor**  
+
+**Covariates**  
+
+**Statistical method**  
+
+# Results   
+
+**Sample Description**  
+
+Insert Table 1 about here.    
+Insert Figure 1 about here.    
+
+**Bivariate analysis**    
+
+**Multivariate analysis**  
+
+**Sensitivity analysis**  
+
+# Discussion  
+
+**Summary of findings**     
+
+**Comparison with other studies and interpretation**  
+
+**Strengths and limitations**  
+
+**Implications, unanswered questions and future research**    
+
+**Conclusion**   
+
+
+{{< pagebreak >}}
+
+
+**Table 1: **    
+
+**Table 2: **     
+
+**Table 3: **    
+
+
+**Figure 1: **  
+
+**Figure 2: **  
+
+**Figure 3: **   
+
+
+
+`{r} code '  
+
+```{r}
+#| echo: false
+tab1
+```
+
+![](Files_For_Article/DAG1.png)
+
+
+{{< pagebreak >}}
+
+
+# References {-}    
+::: {#refs}
+:::

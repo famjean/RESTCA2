@@ -1,0 +1,34 @@
+---
+format:
+  docx:
+    reference-doc: Z_Template_letter.docx
+---
+
+
+# Cover letter   
+
+**xxxxxxxxxx**
+Editor-In-Chief  
+Pr. XXX  
+
+Dear Pr. XXX  
+
+Please find attached our article, **"XXX"**, that we are submitting to your journal as a short communication.  
+
+We believe such data will encourage  
+
+This work has not been published before and is not being considered for publication elsewhere.
+
+
+Thank you for considering this report.
+
+Sincerely,
+
+![](Z_SignatureFJ.png){width="20%"}
+
+Dr François A. M. Jean, MD MS    
+Unité de Santé Mentale Dr Georges Cabal - Centre Hospitalier de Calais   
+575 Grande Rue du Petit Courgain, BP 339, 62107 Calais Cedex, France   
+Tel: 0033.3.21.46.33.62   
+Fax: 0033.3.21.46.89.93     
+Email: F.Jean@ch-calais.fr    
