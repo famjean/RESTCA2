@@ -31,7 +31,7 @@ for (a in 1:length( PackagesNames1 ) )
 
 require( flextable )
 
-load( "ObjectsForQmd.RData")
+#load( "ObjectsForQmd.RData")
 
 knitr::opts_chunk$set("ft.shadow" = FALSE)
 use_df_printer()
@@ -137,37 +137,36 @@ The objective was to explore the barriers to treatment for patients with EDs by 
 
 # Methods  
 **Study design**   
-This study forms part of the RESTCA project. The RESTCA project is a cross-sectional, descriptive, multicentre study recruiting participants diagnosed with an eating disorder (ED). The project aimed to collect information on social media usage, eating disorder (ED) characteristics, lifestyle, psychiatric comorbidities, and care. It took place at three centres in the Hauts-de-France region of France between January 2024 and January 2025.      
+This study forms part of the RESTCA project. The RESTCA project is a cross-sectional, descriptive, multicentre study recruiting participants diagnosed with an eating disorder (ED). It took place at three centres in the Hauts-de-France region of France between January 2024 and January 2025.      
 
-The RESTCA project was approved by the Committee for the Protection of Persons under the reference number 2023-A02380-45. Participants received a letter providing information about the study's objectives. Major patients gave their written consent. Both minor patients and their parents completed a written consent form.    
+The RESTCA project was approved by the Committee for the Protection of Persons under the reference number 2023-A02380-45. Major patients gave their written consent. Both minor patients and their parents completed a written consent.       
 
 **Population**  
 The inclusion criteria were: participants had to be aged between 12 and 30 years; have been clinically diagnosed with an eating disorder (ED) by a psychiatrist; and have been monitored for more than six months for an eating disorder.   
 
-Exclusion criteria included: individuals with autism spectrum disorder, mental retardation, attention deficit disorder with or without hyperactivity, psychotic disorder, or bipolar disorder, individuals who did not understand spoken French and were unable to read it, individuals with a severe sensory impairment that limited or prevented them from completing the questionnaires (visual impairment, deafness, etc.), individuals hospitalized full-time, being pregnant, being homeless, and being incarcerated.   
+Exclusion criteria included: individuals with autism spectrum disorder, mental retardation, attention deficit disorder/hyperactivity, psychotic disorder, or bipolar disorder, hospitalization, not understanding French, severe sensory or motor limitation, being pregnant, being homeless, and incarceration.   
 
 **Data collection**   
-Participants were asked to complete a semi-structured questionnaire. The DSM-5 criteria were evaluated for eating disorders (EDs) and comorbidities. Questions about socio-demographic characteristics, mental health, and care were included. Participants completed the 26-item Eating Attitudes Test (EAT-26) (Garner et al., 1982; Leichner et al., 1994). This scale is a self-report questionnaire that measures a wide range of eating disorder symptoms. The questionnaire included questions about clinical data, such as height (m), weight (kg) and calculation of body mass index (BMI) (kg/m²).
-Details of the questions and response options can be found in the supplementary material.   
+Participants were asked to complete a semi-structured questionnaire. The DSM-5 criteria were evaluated for eating disorders (EDs). Questions about socio-demographic characteristics, mental health, and care were included.   
 
 **Barriers to treatment**  
 Participants were asked an open-response question in French: *'Quelque chose vous a-t-il empêché d’obtenir l’aide dont vous aviez besoin au début de votre prise en soin ?  (regard des autres, argent, peur de grossir, stigma, religion, autres… ). Détaillez.'*; English translation: *'Did anything prevent you from getting the help you needed at the beginning of your treatment? (other people's opinions, money, fear of gaining weight, stigma, religion, other reasons, etc.). Please provide details.'*.   
 
 **Statistical method**   
 *Description*   
-We described numeric variables using the mean and standard deviation, and categorical variables using percentages and counts. We analysed the sample with no missing values for question about barriers to treatment.  
+We analysed the sample with no missing values for question about barriers to treatment using mean (m), standard deviation (sd), percentage (%), and count (n).  
 
 *Textual responses preprocessing*   
-The set of textual responses was tokenized excluding missing values. Then punctuation, numbers, special characters, capital letters, and meaningless words were removed. Next we applied a lemmatization (process of transformed an inflected word to his canonical form).   
+The set of textual responses was tokenized excluding missing values. Then punctuation, numbers, special characters, capital letters, and meaningless words were removed. Next we applied a lemmatization.   
 
 *Natural language processing*
-First, we describe the responses by computing the word count and calculating the TTR (type-token ratio, i.e. the ratio of number word types to number of words) and sparsity. For a response, sparsity is the percentage of tokens that do not appear in the other responses; for the set of responses, it is the average sparsity.
+First, we describe the responses by computing the word count and calculating the type-token ratio (TTR) and sparsity. 
 
-Secondly, we conducted topic modelling (TP) on the preprocessed set of responses. TP is a statistical model used to discover hidden semantic structures within a body of text. We chose the biterm topic model because it is adapted to short texts, such as the responses we studied, and outperforms other TP techniques [@yanBitermTopicModel2013]. In the supplementary material, we display the results of other techniques.   
+Secondly, we conducted topic modelling (TP) on the preprocessed set of responses. TP is a statistical model used to discover hidden semantic structures within a body of text. We chose the biterm topic model because it is adapted to short texts, such as the responses we studied, and outperforms other TP techniques [@yanBitermTopicModel2013]. 
 
-Thirdly, we used Generative Pre-trained Transformers (GPT) to automatically analyse the set of responses. GPT is a type of large language model used to generate text from a prompt. Raw, rather than pre-processed, data was used for the LLM. The prompt was: "xxxxxxxxxxxxxxx". 
+Thirdly, we used Generative Pre-trained Transformers (GPT) to automatically analyse the set of responses. GPT is a type of large language model used to generate text from a prompt. Raw data were used for the LLM. The prompt was: "xxxxxxxxxxxxxxx". 
 
-More details on methods are presented in supplementary material.   
+We used the R language version XXXXXXXX, llama.cpp version xxx, modelxxx version xxx, and treetragger 3.2.5. More details on methods are presented in supplementary material. 
 
 
 # Results   
@@ -181,6 +180,7 @@ More details on methods are presented in supplementary material.
 Insert Table 1 about here.    
 Insert Figure 1 about here.    
 
+In the supplementary material, we display the results of other techniques of natural language processing.   
 
 # Discussion  
 

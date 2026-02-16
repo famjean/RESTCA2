@@ -563,19 +563,27 @@ ggsave( F2, filename = paste0( GraphFile1, "/Biterms_topic_loglik_Q5.png") )
 
 BTM::BTM( df.tmp1,
           k = 3, 
-          iter = 1000, 
+          iter = 10000, 
           background = FALSE, 
-          trace = 500 ) ->
+          trace = T ) ->
   BTmodel
 
 terms( BTmodel , top_n = 10
 )  ->
   BTterms ;
-
 lapply( 1:length(BTterms), 
         function(a) data.frame( topic = a, BTterms[[a]] ) ) |>
   dplyr::bind_rows() ->
   BTterms ;
+
+terms( BTmodel, top_n = 400
+)  ->
+  BTterms2 ;
+
+lapply( 1:length(BTterms2), 
+        function(a) data.frame( topic = a, BTterms2[[a]] ) ) |>
+  dplyr::bind_rows() ->
+  BTterms2 ;
 
 png( filename = paste0( GraphFile1, "/Biterms_topic_Q5.png"), 
      # width = 400, height = 400
@@ -595,18 +603,20 @@ df1.tmp |>
 dev.off()
 
 set.seed(123)
-BTterms |>
+BTterms2 |>
+  dplyr::arrange( desc(probability) ) |>
+  head(24) |>
 ggplot() +
   aes(label = token, 
       size = probability * 10,
  #     x = topic,
       angle_group = topic,
       color = topic ) +
-  geom_text_wordcloud( ) +
+  geom_text_wordcloud( shape ="triangle-upright" ) +
   theme_minimal() +
   scale_color_gradient(low = "black", high = "grey80") -> F3 ; F3
 
-ggsave( F3, 
+ggsave( F3, width = 7, height = 7,
         filename = paste0( GraphFile1, "/Biterms_topic_3WC_Q5.png") )
 
 ggsave( F3,  
@@ -683,6 +693,34 @@ posterior.topic$terms |>
     scale = c( 2, 0.5), max.words =  60, colors = rainbow(11) ) ;
 dev.off()
 
+set.seed(123)
+
+posterior.topic$terms |>
+  as.matrix() |>
+  t() |>
+  as.data.frame() |>
+  tibble::rownames_to_column(var = "token") |>
+  tidyr::pivot_longer(
+    cols = -token,
+    names_to = "topic",
+    values_to = "probability"
+  ) |>
+  transform( topic = factor(topic) ) |> 
+  dplyr::arrange( desc(probability) ) |>
+  head(60) |>
+  ggplot() +
+  aes(label = token, 
+      size = probability * 10,
+      angle_group = topic,
+      color = topic ) +
+  geom_text_wordcloud( ) +
+  theme_minimal()  -> F4 ; F4
+
+ggsave( F4, 
+        filename = paste0( GraphFile1, "/LDA_topic_6WC_Q5.png") )
+
+ggsave( F4,  
+        filename = paste0( GraphFile1, "/LDA_topic_6WC_Q5.pdf") )
 
 
 # Stock results --------------
@@ -697,6 +735,8 @@ Objects.ToExport.list1 <- c( Objects.ToExport.list1,
                               
                             ) 
 ) ;
+
+Q5.wordNetwork.Links = Q5.wordNetwork$Links
 
 Objects.ToExport.XLSX.list1 <- c( Objects.ToExport.XLSX.list1, 
                              list(
@@ -945,7 +985,7 @@ rm( name, a, tmp.file2 ) ;
 #~~~~~~~~~~~~~~~~~~~~~~
 
 # Save objects
-save( Objects.ToExport.list1,  
+save( list = names(Objects.ToExport.list1),  
       file = "~/Desktop/Results/RESTCA2_ObjectsForLinkScript.RData" )
 
 
