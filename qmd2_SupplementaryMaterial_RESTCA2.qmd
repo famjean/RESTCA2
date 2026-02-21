@@ -38,15 +38,9 @@ use_df_printer()
 
 ```
    
-     
-      
 **Word count: XXX**     
 **Table count: XXX**  
-**Figure count:  XXX**     
-
-
-{{< pagebreak >}}
-
+**Figure count:  XXX**    
 
 # Supplementary methods    
 
@@ -70,71 +64,30 @@ Participants were asked an open-response question in French: *'Quelque chose vou
 ### Description    
 We described numeric variables using the mean and standard deviation, and categorical variables using percentages and counts. We analysed the sample with no missing values for question about barriers to treatment.  
 
-# Textual responses preprocessing   
-The set of textual responses was tokenized excluding missing values. Then punctuation, numbers, special characters, capital letters, and meaningless words were removed. Next we applied a lemmatization (process of transformed an inflected word to his canonical form).   
+### Textual responses preprocessing   
+The set of textual responses was tokenized excluding missing values.  Xxxxx   Then punctuation, numbers, special characters, capital letters, and meaningless words were removed. Next we applied a lemmatization (process of transformed an inflected word to his canonical form).   
 
-# Natural language processing   
-First, we describe the responses by computing the word count and calculating the TTR (type-token ratio, i.e. the ratio of number word types to number of words) and sparsity. For a response, sparsity is the percentage of tokens that do not appear in the other responses; for the set of responses, it is the average sparsity.
+### Natural language processing: main methods   
+First, we calculated the total word count, the mean (and sd) number of words per response, and for all responses the type-token ratio (TTR) and the sparsity. Then, we calculated across the responses the mean TTR and mean sparsity. The TTR is the ratio of word types to words. Sparsity is the ratio of absent words to all used words in the set of responses.     
 
 Secondly, we conducted topic modelling (TP) on the preprocessed set of responses. TP is a statistical model used to discover hidden semantic structures within a body of text. We chose the biterm topic model because it is adapted to short texts, such as the responses we studied, and outperforms other TP techniques [@yanBitermTopicModel2013]. In the supplementary material, we display the results of other techniques.   
 
-Thirdly, we used Generative Pre-trained Transformers (GPT) to automatically analyse the set of responses. GPT is a type of large language model used to generate text from a prompt. Raw, rather than pre-processed, data was used for the LLM. The prompt was: "xxxxxxxxxxxxxxxxxxxxxxxxxx". 
+Thirdly, we used Generative Pre-trained Transformers (GPT) to automatically analyse the set of responses. GPT is a type of large language model (LLM) used to generate text from a prompt. Raw, rather than pre-processed, data was used for the LLM. The prompt was: *"Analyse et synthètise les réponses à la question 'Quelque chose vous a-t-il empêché d’obtenir l’aide dont vous aviez besoin au début de votre prise en soin ?  (regard des autres, argent, peur de grossir, stigma, religion, autres… ). Détaillez.'. Les réponses à la question sont : xxx Prends en compte que chaque individu a sa réponse après un chiffre et un slash et deux points (exemple : '1/: réponse'). Prends en compte que cette question a été posé à des patients souffrant d'un trouble du comportement alimentaire lors d'une étude clinique. Donne une réponse en moins de 200 mots et plus de 150 mots en anglais. Ne demande pas d'informations complémentaires dans ta réponse. Ne fait pas de commentaires autres dans ta réponse."*. xxx is the response of participants numbered (example: 1/: response of the first participant; 2/: response of the second participant). Seed and temperature were fixed at xxx and xxxx respectively. 
 
-We used the R language version XXXXXXXX, llama.cpp version xxx, modelxxx version xxx, and treetragger 3.2.5. More details on methods are presented in supplementary material. 
+### Natural language processing: other methods   
 
+Correlation matrix
 
+Réseau de mots
 
+Clustering hierarchical 
 
-## Data collection      
-Participants were asked to complete a semi-structured questionnaire. The DSM-5 criteria were evaluated for eating disorders (EDs) and comorbidities. Questions about socio-demographic characteristics, mental health, and care were included. Participants completed the 26-item Eating Attitudes Test (EAT-26) (Garner et al., 1982; Leichner et al., 1994). This scale is a self-report questionnaire that measures a wide range of eating disorder symptoms. The questionnaire included questions about clinical data, such as height (m), weight (kg) and calculation of body mass index (BMI) (kg/m²).
-Details of the questions and response options can be found in the supplementary material.   
+Latent direchtlet association 
 
-
-## Statistical method  
-*Description*   
-We described numeric variables using the mean and standard deviation, and categorical variables using percentages and counts. We analysed the sample with no missing values for question about barriers to treatment.   
-
-*Textual responses preprocessing*   
-Analyses were conducted using available cases. The set of textual responses was tokenized. Then punctuation, numbers, special characters, capital letters, and meaningless words were removed. Next we applied a lemmatization (process of transformed an inflected word to his canonical form).   
-
-*Natural language processing*
-First, we describe the responses by computing the word count and calculating the TTR (type-token ratio, i.e. the ratio of number word types to number of words) and sparsity. For a response, sparsity is the percentage of tokens that do not appear in the other responses; for the set of responses, it is the average sparsity.
-
-Secondly, we conducted topic modelling (TP) on the preprocessed set of responses. TP is a statistical model used to discover hidden semantic structures within a body of text. We chose the biterm topic model because it is adapted to short texts, such as the responses we studied, and outperforms other TP techniques [@yanBitermTopicModel2013]. In the supplementary material, we display the results of latent dirichlet allocation.   
-
-Thirdly, we used Generative Pre-trained Transformers (GPT) to automatically analyse the set of responses. GPT is a type of large language model used to generate text from a prompt. Raw, rather than pre-processed, data was used for the LLM. The prompt was: "xxxxxxxxxxxxxxx". 
-
-More details on methods are presented in supplementary material.   
+### Versions   
+We used the R language version XXXXXXXX [], llama.cpp version xx [], modelxxx version xxx [], and treetragger 3.2.5 [].   
 
 
-Data collection
-The first section consisted of verifying, according to DSM-5 criteria (American Psychiatric Association & American Psychiatric Association, 2013; Call et al., 2013), that the recruited patients did indeed have an ED currently undergoing treatment. The evaluators also applied the DSM-5 criteria, including the diagnostic criteria for depressive disorders, generalized anxiety disorder (GAD), and post-traumatic stress disorder (PTSD). Three questions were asked at the end of this section to inquire about a history of suicide attempts and the presence of suicidal ideation.
-The second part consisted of a questionnaire designed to gather socio-demographic data from the patient, including: including: nationality, age (in years + months), number of siblings (count), number of half-siblings (count), parents separated (yes/no), duration of separation (not applicable, years), educational or professional status (middle school, high school, other secondary education, university, preparatory class, other tertiary education, paid work, unemployed, other), number of brothers and sisters (count), number of half-brothers and half-sisters (count), separated parents (yes/no), duration of separation (not applicable, years), socio-professional category of parent 1 (CSP1: farmers, CSP2: artisans, merchants, business owners, CSP3: executives and higher intellectual professions, CSP4: intermediate professions, CSP5: employees, CSP 6: workers), socio-professional category of parent 2 (CSP1: farmers, CSP2: artisans, merchants, business owners, CSP3: executives and higher intellectual professions, CSP4: intermediate professions, CSP5: employees, CSP 6: workers, extracurricular activities (open question), leisure activities (open question), place of residence (city (>5,000 inhabitants) (“City,” 2023), countryside, large metropolis), educational grants (yes, no, not applicable), disability allowance for adults (yes, no, not applicable), RSA (yes, no, not applicable), tobacco use (yes, no), if yes, number of cigarettes smoked per day (count), alcohol consumption (yes, no), if yes, frequency of use (once a year, once a month or less, once a week or less, more than twice a week, every day), occasional heavy drinking in the evening (yes, no), psychoactive substance use (yes, no), if yes, type of psychoactive substance use (cocaine, opioids, cannabis, MDMA, methamphetamine, other) and frequency of psychoactive substance use  (once a year, once a month or less, once a week or less, more than twice a week, every day), use of medication without a prescription or beyond the prescription (yes, no), if yes, type of medication (Stilnox, Seresta, codeine, morphine, other) and frequency of use (once a year, once a month or less, once a week or less, more than twice a week, every day).
-In the third part, participants were asked to complete the following self-administered questionnaire.
-The Eating Attitudes Test – 26 items (EAT-26) (Garner et al., 1982; Leichner et al., 1994): This scale is a self-report questionnaire that measures a wide range of eating disorder symptoms. It includes 26 items with 3 subscales exploring 3 domains: food restriction, binge eating and food concerns, and control overeating. A score of 20 or higher is considered to reflect significant ED symptoms.
-The fourth part focused on questions that specifically inquired about the participants' ED and their use of SM: Age of onset of body weight concerns (years), age of onset of physical appearance concerns (years), age of onset of food-related concerns (years), age of onset of deliberate weight modification behaviors (weight loss, vomiting, intensive physical activity, or other) (years), age of onset of weight loss (years), age of onset of medical consultations for ED (years), duration of treatment by an ED professional (month, year(s)), hospitalization for an ED (yes, no), age at acquisition of the first mobile phone (years), age at start of social media use (years), social media platforms used by the patient in life (open-ended response), type of social media usage (viewing only, content creation & commenting), viewing ED-related content on social media (yes, no, not applicable), if yes, age at first exposure to social media content on ED (years), if yes, what type of content related to EDs (type 1 : focused on weight loss, type 2 : focused on recovery, type 3 : both types), if yes, maximum age of use of social media on EDs, viewing ED-related content in the past month (yes, no, not applicable), if yes, what type of content related to EDs in the past month (type 1 : focused on weight loss, type 2 : focused on recovery, type 3 : both types), following ED-related influencers on social media (yes, no, not applicable), following ED-related influencers in the past month (yes, no, not applicable), purchasing from these influencers' accounts for weight loss (yes, no, not applicable), purchasing from these influencers' accounts for ED recovery  (yes, no, not applicable), consulting a professional coach for weight loss (yes, no, not applicable), consulting a professional coach for ED recovery (yes, no, not applicable).
-Finally, the last part of the questionnaire included the collection of clinical data such as height (m), weight (kg), and body mass index (BMI) calculation (kg/m²).
-
-Missing data management
-Missing data were removed, and analyses were conducted using available cases (Rubin, 1976). for each statistical test, based on the variables analyzed in that test.
-Normality Assessment
-A distribution was considered normal if the Shapiro-Wilk test (Shapiro & Wilk, 1965), the Anderson-Darling test (Anderson & Darling, 1952), and the Jarque-Bera test (Jarque & Bera, 1987) all confirmed normality. Combining a test based on the distribution of quantiles relative to a normal law, a test based on the empirical cumulative distribution function, and a test based on moments ensures a conservative approach to defining normality.
-
-## Statistical methods   
-
-
-Tokenisation https://arxiv.org/abs/2407.11606?utm_source=chatgpt.com
-
-Tokenization is the process of converting a string of characters into a list of individual pieces of text, called tokens, based on a reference. Tokens can be words, symbols, or punctuation. By example: "The car costs 4000$." is decomposed to "The", "car", "costs", "4000", "$", ".".
-
-https://arxiv.org/abs/2302.00407?utm_source=chatgpt.com
-Lemmatiezation is the process of transformed an inflected word to his canonical form called a lemma. By example, "men" becomes "man", "is" becomes "be", and "cats" becomes "cat". 
-
-38. 	Blei DM, Ng AY, Jordan MI. Latent dirichlet allocation. J Mach Learn Res. 2003;3(Jan):993‑1022. 
-
-A generative pre-trained transformer (GPT) is a type of large language model (LLM)[1][2][3] that is widely used in generative AI chatbots.[4][5] GPTs are based on a deep learning architecture called the transformer. They are pre-trained on large datasets of unlabeled content, and able to generate novel content
-
-Natural language processing is the processing of natural language by a computer.   
 
 {{< pagebreak >}}
 
@@ -154,18 +107,19 @@ This figure shows the number of patients at each stage of the study process. Twe
 tabS1
 ```
 
-
-## Sample description    
-The Table S1 presents the description of data.   
-
-### Table S1: Description of sample     
-```{r}
-#| echo: false
-tabS1
-```
+### Determining the numer of latent topic    
+In the Figure S2, we see that the optimal number of latent topic was three.     
 
 ![](Files_For_Article/DAG1.png)   
-### Figure S2:    
+### Figure S2:  Evolution of loglikelihood of models from two latent topics to fifteen latent topics     
+The first optimal number of latent topic was at three with the first minimal of loglikelihood.     
+
+
+## Other NLP methods    
+
+We first
+![](Files_For_Article/DAG1.png)   
+### Figure S3: Correlation semimatrix of words   
 
 
 {{< pagebreak >}}

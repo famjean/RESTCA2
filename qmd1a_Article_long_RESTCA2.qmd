@@ -38,6 +38,9 @@ use_df_printer()
 
 ```
 
+https://link.springer.com/journal/127/submission-guidelines
+
+
 F.A.M. Jean, MD PhD^1,2^    
 Clara Dupire, MD^1^    
 Antoine Lamer, PhD^3^   
@@ -60,17 +63,17 @@ Fax: 0033.3.21.46.89.93
 Email: F.Jean@ch-calais.fr    
 
 **Word count: XXX**     
-**Table count: XXX**  
-**Figure count:  XXX**  
+**Table count: 0**  
+**Figure count:  1**  
 
 {{< pagebreak >}}
 
 
 ## Abstrat 1   
-**Introduction:**    
-**Methods:**  
-**Results:**  
-**Conclusion:**  
+**Introduction:**  The course of eating disorders (ED) is negatively affected by a long delay in treatment. This study aimed to explore the barriers to treatment for ED patients by analyzing their narratives using natural language processing, particularly topic modeling and generative pre-trained transformers.      
+**Methods:**  From January 2023 to January 2024, participants between 12 and 30 years of age who had been clinically diagnosed with an ED by a psychiatrist were recruited in France. They responded to an open-ended question about the barriers they encountered when trying to access treatment for their ED. We used topic modeling (TP) and generative pre-trained transformers (GPT) to analyze responses.   
+**Results:**  In the statement of 43 patients, both TP and GPT identified few barriers to treatment-seeking. These barriers were fear of judgment of other, fear of gaining weight, fear of reaction and lack of understanding of the loved ones, denial of the illness, and fear of the caregiving. Only GPT found topics like financial concerns, difficulty to access to specialized cares, and geographical limitations.    
+**Conclusion:**  !!!!!!!Some of the barriers depends of the symptoms of ED like fear of gaining weight or fear of other judgement and could not be reached. Other barriers like fear of lack of understanding or negative reaction of loved ones could be the target of prevention interventions. More other barriers could be overpass with a lot of difficulty due to the cost like the geographical limitations and the difficulty to access to specialized cares. ¡!!!!!!!!!!!
 
 **Word count: XXXXXXX**  
 
@@ -131,9 +134,18 @@ We would like to thank the participants for their commitment to this project, as
 
 {{< pagebreak >}}
 
+Eating disorders (ED) are mental health conditions characterized by a disrupted relationship with eating, body weight, and body shape, as well as extreme eating patterns [DSM]. EDs include anorexia nervosa, bulimia nervosa, binge-eating disorder, atypical anorexia nervosa, low-frequency and/or limited-duration bulimia nervosa, low-frequency and/or limited-duration binge-eating disorder, purging disorder, night eating syndrome, and other specified and unspecified eating disorders [DSM].     
 
-**Objective**   
-The objective was to explore the barriers to treatment for patients with EDs by considering their narratives. The secondary objective was to explore differences in text analysis between LLM and NLP.   
+In a 2021 meta-analysis [Qian et al.], Qian et al. reported a combined lifetime prevalence of 0.91% (95% confidence interval - 95%CI: 0.48-1.71) for ED. Prevalence varied between studies, ranging from 0.1% to 3.8%. Western countries demonstrated higher prevalence rates than Asian countries (p < 0.001). The combined lifetime prevalences were 0.16% (95%CI: 0.06–0.31) for anorexia nervosa, 0.63% (95% CI: 0.33–1.02) for bulimia nervosa, and 1.53% (95% CI: 1.00–2.17) for binge-eating disorder. ED deserve special attention because they are associated with the highest mortality rate among mental disorders [Arcelus et al., 2011; Iwajomo et al., 2021; van Hoeken & Hoek, 2020] and because their prevalence increased after the Coronavirus Disease 2019 (COVID-19) pandemic  [https://www.jahonline.org/article/S1054-139X(25)00263-0/fulltext  https://pmc.ncbi.nlm.nih.gov/articles/PMC7612698/  https://www.mdpi.com/2673-8112/4/11/119].    
+
+The delay between the ED onset and treatment-seeking is an important point [https://pmc.ncbi.nlm.nih.gov/articles/PMC10710219/ ]. Early interventions lead to better outcomes [https://pubmed.ncbi.nlm.nih.gov/32064663/  https://pubmed.ncbi.nlm.nih.gov/33781000/] and decrease healtcare costs [https://pubmed.ncbi.nlm.nih.gov/29602325/  https://pubmed.ncbi.nlm.nih.gov/28152200/ ] . Nevertheless, the delay could be substantial as reported in an australian study with an average delay of 5.28 years [https://pubmed.ncbi.nlm.nih.gov/34250844/]. Identifying barriers to treatment is fundamental for these reasons.   
+   
+The challenge is to determine how identifying the barriers to treatment. Deterministic questions, such as multiple choice questions, depend on the researcher's hypotheses and knowledge. Open-answer questions allow patients to share their ideas. Specific methodologies exist to treat open-ended responses [https://pubmed.ncbi.nlm.nih.gov/37055353/], but methodologies based on human work are limited when the sample size increases. 
+
+Natural language processing (NLP) can be used to automatically analyze open-ended responses. NLP is processing human spoken or written language with a computer for the purpose of understanding or learning [https://www.science.org/doi/10.1126/science.aaa8685]. Many methods are included in NLP. One of the most powerful is topic modeling (TP). TP is a statistical model that discovers hidden semantic structures within a body of text [@yanBitermTopicModel2013]. Since 2022, the emergency of generative pre-trained transformers (GPT) has promised to surpass all previous methods [https://pmc.ncbi.nlm.nih.gov/articles/PMC10337400/?hl=fr-FR]. GPT is a type of large language model (LLM) that generates text from a prompt [https://cdn.openai.com/papers/Training_language_models_to_follow_instructions_with_human_feedback.pdf?hl=fr-FR ]. GPT was initially only accessible online. But to maintain data confidentiality, we must have waited for locally executed solutions. In addition, seed for random based processes should be fixed to ensure reproductibility. Thanks to llama.cpp [https://llama-cpp.com/], solutions for local execution and fixed seed are now available for free without mastering all the LLM and with low computational power. 
+
+**Objectives**   
+The objective was to explore the barriers to treatment for patients with ED by considering their narratives using NLP. The secondary objective was to explore differences in text analysis between TM and GPT.   
 
 # Methods  
 **Study design**   
@@ -142,15 +154,13 @@ This study forms part of the RESTCA project. The RESTCA project is a cross-secti
 The RESTCA project was approved by the Committee for the Protection of Persons under the reference number 2023-A02380-45. Major patients gave their written consent. Both minor patients and their parents completed a written consent.       
 
 **Population**  
-The inclusion criteria were: participants had to be aged between 12 and 30 years; have been clinically diagnosed with an eating disorder (ED) by a psychiatrist; and have been monitored for more than six months for an eating disorder.   
-
-Exclusion criteria included: individuals with autism spectrum disorder, mental retardation, attention deficit disorder/hyperactivity, psychotic disorder, or bipolar disorder, hospitalization, not understanding French, severe sensory or motor limitation, being pregnant, being homeless, and incarceration.   
+The inclusion criteria were: participants had to be aged between 12 and 30 years; have been clinically diagnosed with an eating disorder (ED) by a psychiatrist; and have been monitored for more than six months for an eating disorder.      
 
 **Data collection**   
-Participants were asked to complete a semi-structured questionnaire. The DSM-5 criteria were evaluated for eating disorders (EDs). Questions about socio-demographic characteristics, mental health, and care were included.   
+Participants were asked to complete a semi-structured questionnaire. The DSM-5 criteria were evaluated for ED. Questions about socio-demographic characteristics, mental health, and care were included.   
 
 **Barriers to treatment**  
-Participants were asked an open-response question in French: *'Quelque chose vous a-t-il empêché d’obtenir l’aide dont vous aviez besoin au début de votre prise en soin ?  (regard des autres, argent, peur de grossir, stigma, religion, autres… ). Détaillez.'*; English translation: *'Did anything prevent you from getting the help you needed at the beginning of your treatment? (other people's opinions, money, fear of gaining weight, stigma, religion, other reasons, etc.). Please provide details.'*.   
+Participants were asked an open-response question:  *"Did anything prevent you from getting the help you needed at the beginning of your treatment? (other people's opinions, money, fear of gaining weight, stigma, religion, other reasons, etc.). Please provide details."*.   
 
 **Statistical method**   
 *Description*   
@@ -160,68 +170,119 @@ We analysed the sample with no missing values for question about barriers to tre
 The set of textual responses was tokenized excluding missing values. Then punctuation, numbers, special characters, capital letters, and meaningless words were removed. Next we applied a lemmatization.   
 
 *Natural language processing*
-First, we describe the responses by computing the word count and calculating the type-token ratio (TTR) and sparsity. 
+First, we calculated the total word count, the mean (and sd) number of words per response, and for all responses the type-token ratio (TTR) and the sparsity. Then, we calculated across the responses the mean TTR and mean sparsity. The TTR is the ratio of word types to words. Sparsity is the ratio of absent words to all used words in the set of responses.     
 
-Secondly, we conducted topic modelling (TP) on the preprocessed set of responses. TP is a statistical model used to discover hidden semantic structures within a body of text. We chose the biterm topic model because it is adapted to short texts, such as the responses we studied, and outperforms other TP techniques [@yanBitermTopicModel2013]. 
+Secondly, we conducted TP on the preprocessed set of responses. We chose the biterm topic model [@yanBitermTopicModel2013]. 
 
-Thirdly, we used Generative Pre-trained Transformers (GPT) to automatically analyse the set of responses. GPT is a type of large language model used to generate text from a prompt. Raw data were used for the LLM. The prompt was: "xxxxxxxxxxxxxxx". 
+Thirdly, we used a local GPT to automatically analyse the not preprocessed set of responses. The prompt is presented in supplementary material. Seed and temperature were fixed.      
 
-We used the R language version XXXXXXXX, llama.cpp version xxx, modelxxx version xxx, and treetragger 3.2.5. More details on methods are presented in supplementary material. 
+We used the R language version 4.4.1 [xxxxxxxxxxxxxxxxx] and some packages [
+@Manual{R-koRpus,
+  title = {koRpus: Text Analysis with Emphasis on POS Tagging, Readability, and
+Lexical Diversity},
+  author = {Meik Michalke},
+  year = {2021},
+  note = {R package version 0.13-8},
+  url = {https://reaktanz.de/?c=hacking\&s=koRpus},
+}
 
+@Article{quanteda,
+  title = {quanteda: An R package for the quantitative analysis of textual data},
+  journal = {Journal of Open Source Software},
+  author = {Kenneth Benoit and Kohei Watanabe and Haiyan Wang and Paul Nulty and Adam Obeng and Stefan Müller and Akitaka Matsuo},
+  doi = {10.21105/joss.00774},
+  url = {https://quanteda.io},
+  volume = {3},
+  number = {30},
+  pages = {774},
+  year = {2018},
+}
+ 
+
+
+@Manual{topicmodels,
+  title = {topicmodels: Topic Models},
+  author = {Bettina Grün and Kurt Hornik},
+  year = {2024},
+  note = {R package version 0.2-17},
+  url = {https://CRAN.R-project.org/package=topicmodels},
+}
+
+@Manual{tm,
+  title = {tm: Text Mining Package},
+  author = {Ingo Feinerer and Kurt Hornik},
+  year = {2025},
+  note = {R package version 0.7-16},
+  url = {https://CRAN.R-project.org/package=tm},
+}
+
+@Manual{BTM,
+  title = {BTM: Biterm Topic Models for Short Text},
+  author = {Jan Wijffels},
+  year = {2023},
+  note = {R package version 0.3.7},
+  url = {https://CRAN.R-project.org/package=BTM},
+}
+], llama.cpp version version: 6924 (87c9efc3b)
+built with cc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0 for x86_64-linux-gnu [https://llama-cpp.com/], gemma version 3-4B-it-Q8_0 [https://deepmind.google/models/gemma/], and treetragger 3.2.5 [https://cis.uni-muenchen.de/~schmid/tools/TreeTagger/].   
+
+More details on methods are presented in supplementary material. Other NLP methods are presented too.   
 
 # Results   
 
+**Population description**   
+Among the 43 participants, the mean age was of 19.6 years (sd: 4.1) ans there was 93% (n: 40) of women. The majority of participants were diagnosed with an anorexia nervosa (37.1%, n: 16) and there was respectively 23.3% (n: 10) and 39.5% (n: 17) of participants diagnosed with boulimia nervosa and other or unspecified ED.    
+
 **Textual responses description**  
+The total number of words was 243 for 43 responses, which is an average of 5.7 words per responses (sd: 3.5). The total TTR was of 0.5, the mean TTR was of 0.97, the total sparsity of 0.96, and the mean sparsity was of 0.96. The answers were brief and avoided repetition. Considering all the set of responses, words were rarely repeated. Only a small proportion of words were shared between responses. Therefore, analyzing topics is relevant.       
 
 **Topic modeling**  
+Figure 1 displays the list of the most probable words for each identified latent topic. We had associate these words in a logical way to identify the latent topics. Therefore, the topics were: 1/ fear of other people's judgement and of gaining weight; 2/ fear of loved ones, of disappointing them, of loved ones not understanding, and of being sick; 3/ fear of weight, of having to eat, of having to do, and denial. We could interpret: 1/ core symptoms of ED, 2/ fear of the judgment of loved ones and being sick, 3/ fear of obligation in caregiving and denial.    
 
-**Analysis using generative pre-trained transformers**  
-
-Insert Table 1 about here.    
 Insert Figure 1 about here.    
 
-In the supplementary material, we display the results of other techniques of natural language processing.   
+**Analysis using GPT**     
+The text generated by GPT was : *"
+Here's an analysis of the responses regarding barriers to seeking help for eating disorders: The most prevalent obstacles identified across the participant group were related to social perceptions and self-image. Fear of judgment and negative reactions from others (responses 6, 8, 10, 13, 22, 25, 30, 35) consistently surfaced, alongside a strong fear of weight gain and body image concerns (responses 1, 3, 4, 11, 13, 14, 21, 22, 31, 33, 39).  Deni­al of the illness and a desire to maintain a restrictive eating pattern were significant barriers (responses 15, 19, 24, 28). Financial constraints (response 5) and difficulties accessing appropriate care, including geographical limitations and family stigma (responses 17, 40, 41) also played a role. A few individuals expressed a reluctance to seek help due to a perceived lack of deservingness (response 34). Notably, some participants experienced a fear of the recovery process itself, including the prospect of needing to eat normally and the potential for weight gain (responses 27, 32).  Communication difficulties and a lack of understanding from family members (response 17) further compounded these challenges."*
+
+In the supplementary material, we display the results of other NLP methods.   
 
 # Discussion  
 
 **Summary of findings**     
+In the statement of 43 patients, both TP and GPT identified few barriers to treatment-seeking. These barriers were fear of judgment of other, fear of gaining weight, fear of reaction and lack of understanding of the loved ones, denial of the illness, and fear of the caregiving. GPT seems to be more accurate on some aspects in comparison of TP and found topics like financial concerns, difficulty to access to specialized cares, and geographical limitations. 
 
 **Strengths and limitations**  
 
 **Comparison with other studies and interpretation**  
 
+https://pmc.ncbi.nlm.nih.gov/articles/PMC8978368/
+
+https://pmc.ncbi.nlm.nih.gov/articles/PMC10228357/
+
+https://pmc.ncbi.nlm.nih.gov/articles/PMC10552972/
+
+https://pmc.ncbi.nlm.nih.gov/articles/PMC10241369/
+
+https://pmc.ncbi.nlm.nih.gov/articles/PMC10710219/
+
+https://pubmed.ncbi.nlm.nih.gov/34250844/
+
 **Implications, unanswered questions and future research**    
+Donne le même résultat. Sauf que plus direct lisible. Moins soumis à la détermination des thématiques. Plus détaillé. Mais est ce que ces détails qui touche moins de 10% des personnes sont parfois important ou jamais. Dépend du domaine. 
+
+
+Overpassing barriers to treatment could lead to earlier interventions and better outcomes [https://pubmed.ncbi.nlm.nih.gov/32064663/  https://pubmed.ncbi.nlm.nih.gov/33781000/]. Furthermore, pecific therapy for early intervention have been created like FREED for First Episode and Rapid Early Intervention for Eating Disorder
+[https://pubmed.ncbi.nlm.nih.gov/27619198/]
 
 **Conclusion**   
-
+!!!!!Some of the barriers depends of the symptoms of ED like fear of gaining weight or fear of other judgement and could not be reached. Other barriers like fear of lack of understanding or negative reaction of loved ones could be the target of prevention interventions. More other barriers could be overpass with a lot of difficulty due to the cost like the geographical limitations and the difficulty to access to specialized cares. ¡!!!!!!!!!!!
 
 {{< pagebreak >}}
 
-
-**Table 1: **    
-
-**Table 2: **     
-
-**Table 3: **    
-
-
+![](Files_For_Article/DAG1.png)   
 **Figure 1: **  
-
-**Figure 2: **  
-
-**Figure 3: **   
-
-
-
-`{r} code '  
-
-```{r}
-#| echo: false
-tab1
-```
-
-![](Files_For_Article/DAG1.png)
-
+ 
 
 {{< pagebreak >}}
 

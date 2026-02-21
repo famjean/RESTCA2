@@ -33938,7 +33938,8 @@ TextToWordNetwork.preparation <- function( corpus,
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 WordNetwork <- function( KeyWords, save.plot = FALSE, exportfile = NULL, 
-                         wordfrequence.filter = 1, weight.filter = 0.1, 
+                         wordfrequence.filter = 2, 
+                         weight.filter = 3, 
                          labels.filter = 0.5, 
                          seed = 123 )
 {
@@ -34012,8 +34013,11 @@ WordNetwork <- function( KeyWords, save.plot = FALSE, exportfile = NULL,
   
   # Links between words 
   KeyWords |> 
-    lapply( function(x){expand.grid(W1 = x, W2 = x, w = 1 / length(x), 
-                                    stringsAsFactors = FALSE)} ) |>
+    lapply( function(x){expand.grid(W1 = x, 
+                                    W2 = x, 
+                                    w = 1, 
+                                    stringsAsFactors = FALSE)} 
+            ) |>
     dplyr::bind_rows() -> 
     tmp1 ;
   
@@ -34036,17 +34040,20 @@ WordNetwork <- function( KeyWords, save.plot = FALSE, exportfile = NULL,
     network::network( directed = FALSE ) -> 
     network1 ;
   
-  network::set.edge.attribute(network1, "weight", tmp1$w) ;
+  network::set.edge.attribute(network1, "weight", links1$w) ;
   
-  network1 |>  network::as.edgelist( attrname = "weight") -> tmp2 ;
+  network1 |> network::as.edgelist( attrname = "weight") -> tmp2 ;
   
   tnet::symmetrise_w(tmp2) -> tmp2 ; 
   tnet::as.tnet(tmp2) |> tnet::degree_w() -> tmp2 ;
-  network::set.vertex.attribute(network1, "degree_w", tmp2[,"output"]) ;
+  network::set.vertex.attribute(network1, 
+                                "degree_w", tmp2[,"output"]) ;
   
   # Labelling
   network1 %v% "degree_w" -> labels1 ;
-  ifelse(labels1 >= quantile(labels1, labels.filter),  network::network.vertex.names(network1), NA) -> labels1 ;
+  ifelse(labels1 >= quantile(labels1, labels.filter),  
+         network::network.vertex.names(network1), NA
+         ) -> labels1 ;
   network::set.vertex.attribute(network1, "label", labels1) ;
   
   # Network graph
@@ -34508,12 +34515,27 @@ Corpus.Description <- function( corpus,
       2,
       function(x) { length( x[ x == 0 ] ) / length( x ) } )  |>
     c( 
-      quanteda::sparsity( quanteda::dfm( quanteda::tokens( quanteda::corpus( corpus ) ) ) ) )->
+      quanteda::sparsity( quanteda::dfm( quanteda::tokens( quanteda::corpus( corpus ) ) ) ) ) ->
     sparsity ;
   
   output |>
     cbind.data.frame( 
       sparsity = sparsity ) ->
+    output ;
+  
+  output[-nrow(output), 2:6] |>
+    apply( MARGIN = 2, FUN = mean ) |>
+    ( function(x) c( "Mean", x ) )() ->
+    tmp2 ; 
+  
+  output[-nrow(output), 2:6] |>
+    apply( MARGIN = 2, FUN = sd ) |>
+    ( function(x) c( "sd", x ) )() ->
+    tmp3 ;
+    
+    
+    rbind( output, tmp2, tmp3 ) |>
+    as.numeric.data.frame() ->
     output ;
   
   if ( !is.null( round ) ) 

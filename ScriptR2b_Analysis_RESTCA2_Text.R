@@ -121,7 +121,8 @@ renv::status()
 #~~~~~~~~~~~~~~~~~~~~~
 
 c( "openxlsx", "furrr", "ggplot2", "wordcloud","corrplot", "svglite",
-   "forcats", "NbClust", "ggwordcloud",
+   "forcats", "NbClust", "ggwordcloud", "textplot", "ggraph",
+   "concaveman",
    "BTM", "topicmodels", "igraph", "tnet",  "scatterplot3d"
 ) -> 
   PackagesNames1 ;
@@ -301,8 +302,8 @@ clean.lemma.Punctuation |>
     save.plot = FALSE, 
     exportfile = GraphFile1, 
     wordfrequence.filter = 2, 
-    weight.filter = 0.1, 
-    labels.filter = 0.1, 
+    weight.filter = 2, 
+    labels.filter = 0.2, 
     seed = 123 ) ->
   Q5.wordNetwork ;
 
@@ -351,7 +352,7 @@ dev.off()
 # tdm
 
 tdm.clean.lemma.NoPunctuation |>
-  tm::removeSparseTerms( 0.98) |>
+  tm::removeSparseTerms( 0.97) |>
   as.matrix() |>
   (function(x) data.frame( x, 
                            counttot = rowSums(x), 
@@ -385,7 +386,7 @@ ggsave( F1, filename = paste0( GraphFile1, "/TDM_Q5.pdf"),
 # hclust
 set.seed(14243);
 tdm.clean.lemma.NoPunctuation |>
-  tm::removeSparseTerms( 0.96) |>
+  tm::removeSparseTerms( 0.97) |>
   as.matrix() |>
   (function(x) data.frame( x, 
                            counttot = rowSums(x), 
@@ -445,7 +446,7 @@ png( filename = paste0( GraphFile1, "/Hclust_Q5.png")
 )
 set.seed(14243);
 tdm.clean.lemma.NoPunctuation |>
-  tm::removeSparseTerms( 0.96) |>
+  tm::removeSparseTerms( 0.97) |>
   as.matrix() |>
   (function(x) data.frame( x, 
                            counttot = rowSums(x), 
@@ -467,7 +468,7 @@ pdf( file = paste0( GraphFile1, "/Hclust_Q5.pdf")
 )
 set.seed(14243);
 tdm.clean.lemma.NoPunctuation |>
-  tm::removeSparseTerms( 0.96) |>
+  tm::removeSparseTerms( 0.97) |>
   as.matrix() |>
   (function(x) data.frame( x, 
                            counttot = rowSums(x), 
@@ -528,7 +529,8 @@ tdm.clean.lemma.NoPunctuation |>
   tm::removeSparseTerms( 0.97) |>
   as.matrix() |>
   (function(x) data.frame( Terms = rownames(x), x ) )() |>
-  (function(x) reshape( x, varying = 2:ncol(x), direction = "long", sep = "" ) )() |> 
+  (function(x) reshape( x, varying = 2:ncol(x), 
+                        direction = "long", sep = "" ) )() |> 
   base::subset( select = c( Terms, time), subset = X != 0 ) |>
   (function(x) data.frame( id = x$time, lemma = x$Terms ) )() ->
   df.tmp1
@@ -622,13 +624,270 @@ ggsave( F3, width = 7, height = 7,
 ggsave( F3,  
         filename = paste0( GraphFile1, "/Biterms_topic_3WC_Q5.pdf") )
 
+# prepare data BTM
+BTterms2 |>
+  dplyr::arrange( desc(probability) ) |>
+  head(24) |>
+  subset( select = c( token, topic, probability ) 
+          )-> tmp4 ;
+table(tmp4$token)[ table(tmp4$token) > 1] |>
+  names() ->
+  names.a ;
+for (a in names.a)
+{
+  tmp4[ tmp4$token == a, "token" ][1] -> token1 ;
+  tmp4[ tmp4$token == a, "topic" ] |>
+    paste( collapse = "-" ) -> topic1 ;
+  tmp4[ tmp4$token == a, "probability" ] |>
+    mean() -> prob1 ;
+  tmp4$topic <- as.character( tmp4$topic ) ;
+  rbind( tmp4[ tmp4$token != a, ],
+         c( token1, topic1, prob1 ) ) |>
+    data.frame() ->
+    tmp4 ;
+  tmp4$topic <- factor( tmp4$topic ) ;
+  tmp4$probability <- as.numeric( tmp4$probability ) ;
+}
+rm(a,names.a)
+# prepare network 
+tmp6 <- NULL ;
+for (a in 1:max( unique( df.tmp1$id ) ) )
+{
+  subset(df.tmp1, df.tmp1$id == a) ->
+    tmp.a ;
+  
+  if ( nrow(tmp.a) > 1 )
+  {
+    for (b in 1:( nrow(tmp.a) - 1 ) )
+    {
+      rbind( tmp6,
+             c( tmp.a[b,2], 
+                tmp.a[b+1,2] )
+      ) ->
+        tmp6 ; 
+    }
+  }
+}
+rm( tmp.a )
+for (a in 1:nrow(tmp6) )
+{
+  if ( tmp6[a,1] > tmp6[a,2] )
+  {
+    tmp6[a,1] -> t1 ;
+    tmp6[a,1] -> t2 ;
+    t1 -> tmp6[a,2] ;
+    t2 -> tmp6[a,1] ;
+  }
+}
+rm( t1, t2)
+apply( tmp6, 1, paste, collapse = "_") -> tmp7 ;
+data.frame( two_tokens = tmp7 ) -> tmp7 ;
+data.frame( two_tokens = names( table( tmp7$two_tokens ) ), 
+       weight = as.numeric( table( tmp7$two_tokens ) ) ) -> tmp8 ;
+strsplit(tmp8$two_tokens, "_" ) |> 
+  rbind.force() |>
+  (function(x) data.frame( from = x[,1], 
+                           to = x[,2], 
+                           link.weight = tmp8$weight ) )() ->
+  tmp9 ; 
+tmp9 |>
+  subset( tmp9$from %in% c( tmp4$token ) & tmp9$to %in% c( tmp4$token ) ) |>
+  na.omit() |>
+  data.frame() ->
+  tmp10 ; 
 
+all(  c(tmp10$from, tmp10$to ) %in% tmp4$token )
+
+links <- data.frame( tmp10 ) ;
+nodes <- data.frame( tmp4 ) |> dplyr::arrange( topic ) ;
+# Create graph
+igraph::graph_from_data_frame(
+  d = links, # from to type weight
+  vertices = nodes, # id label type type.label size 
+  directed = F 
+) ->
+  net1 ;
+# Custom layout
+igraph::vcount(net1) -> n1 ;
+matrix(NA, nrow = n1, ncol = 2) -> layout1 ;  # creat matrix
+set.seed(123)  
+layout1[1:2, 1] <- rnorm( length( 1:2 ), -0.5, 1)  # Assign x-coordinates 
+layout1[4:11, 1] <- rnorm( length( 4:11 ), 2.5, 1)  # Assign x-coordinates 
+layout1[13:19, 1] <- rnorm( length( 13:19 ), -2.5, 1)  # Assign x-coordinates 
+layout1[12, 1] <- rnorm( length( 12 ), -0.5, 0)  # Assign x-coordinates 
+layout1[ c(3,20), 1] <- rnorm( length( c(3,20) ), 0.5, 0.8)  # Assign x-coordinates 
+layout1[1:2, 2] <- rnorm( length( 1:2 ), 3, 0.3)  # Assign y-coordinates 
+layout1[4:11, 2] <- rnorm( length( 4:11 ), 0, 1)  # Assign y-coordinates 
+layout1[13:19, 2] <- rnorm( length( 13:19 ), 0, 1)  # Assign y-coordinates 
+layout1[12, 2] <- rnorm( length( 12 ), 1.3, 0)  # Assign y-coordinates 
+layout1[ c(3,20), 2] <- rnorm( length( c(3,20) ), 1.7, 0.8)  # Assign y-coordinates 
+# Plot
+plot(
+  net1,
+  layout = layout1,
+  edge.color = "grey80",
+  edge.width = igraph::E(net1)$link.weight * 1,
+  vertex.color = "grey80",
+  vertex.frame.color = "grey60", 
+  vertex.size = igraph::V(net1)$probability * 100,
+  #vertex.label = igraph::V(net1)$media,
+  vertex.label.color = "black",
+  mark.groups = list( c(1:2, 3, 20, 12), c(4:11, 12), c(13:19, 3, 20, 12) ),
+  mark.col = c(adjustcolor("green", alpha.f = 0.4),
+               adjustcolor("red", alpha.f = 0.4),
+               adjustcolor("blue", alpha.f = 0.4)
+               ),
+  mark.border = c( "green", "red","blue")
+)
+# legend
+legend( x = "bottomleft", 
+        c("topic 1","topic 2", "topic 3"), 
+        pch=21,
+        col = c("green", "red","blue"), 
+        pt.bg = c("green", "red","blue"), 
+        pt.cex = 2, 
+        cex = 0.8, 
+        bty = "n", 
+        ncol = 1 )
+
+png( filename = paste0( GraphFile1, "/BTMv2_Q5.png")
+     # width = 400, height = 400
+)
+plot(
+  net1,
+  layout = layout1,
+  edge.color = "grey80",
+  edge.width = igraph::E(net1)$link.weight * 1,
+  vertex.color = "grey80",
+  vertex.frame.color = "grey60", 
+  vertex.size = igraph::V(net1)$probability * 100,
+  #vertex.label = igraph::V(net1)$media,
+  vertex.label.color = "black",
+  mark.groups = list( c(1:2, 3, 20, 12), c(4:11, 12), c(13:19, 3, 20, 12) ),
+  mark.col = c(adjustcolor("green", alpha.f = 0.4),
+               adjustcolor("red", alpha.f = 0.4),
+               adjustcolor("blue", alpha.f = 0.4)
+  ),
+  mark.border = c( "green", "red","blue")
+)
+# legend
+legend( x = "bottomleft", 
+        c("topic 1","topic 2", "topic 3"), 
+        pch=21,
+        col = c("green", "red","blue"), 
+        pt.bg = c("green", "red","blue"), 
+        pt.cex = 1.5, 
+        cex = 0.8, 
+        bty = "n", 
+        ncol = 1 )
+dev.off()
+
+
+pdf( file = paste0( GraphFile1, "/BTMv2_Q5.pdf")
+     # width = 400, height = 400
+)
+plot(
+  net1,
+  layout = layout1,
+  edge.color = "grey80",
+  edge.width = igraph::E(net1)$link.weight * 1,
+  vertex.color = "grey80",
+  vertex.frame.color = "grey60", 
+  vertex.size = igraph::V(net1)$probability * 100,
+  #vertex.label = igraph::V(net1)$media,
+  vertex.label.color = "black",
+  mark.groups = list( c(1:2, 3, 20, 12), c(4:11, 12), c(13:19, 3, 20, 12) ),
+  mark.col = c(adjustcolor("green", alpha.f = 0.4),
+               adjustcolor("red", alpha.f = 0.4),
+               adjustcolor("blue", alpha.f = 0.4)
+  ),
+  mark.border = c( "green", "red","blue")
+)
+# legend
+legend( x = "bottomleft", 
+        c("topic 1","topic 2", "topic 3"), 
+        pch=21,
+        col = c("green", "red","blue"), 
+        pt.bg = c("green", "red","blue"), 
+        pt.cex = 1.5, 
+        cex = 0.8, 
+        bty = "n", 
+        ncol = 1 )
+dev.off()
+
+
+png( filename = paste0( GraphFile1, "/BTMv2BW_Q5.png")
+     # width = 400, height = 400
+)
+plot(
+  net1,
+  layout = layout1,
+  edge.color = "grey60",
+  edge.width = igraph::E(net1)$link.weight * 1,
+  vertex.color = "grey60",
+  vertex.frame.color = "grey40", 
+  vertex.size = igraph::V(net1)$probability * 100,
+  #vertex.label = igraph::V(net1)$media,
+  vertex.label.color = "black",
+  mark.groups = list( c(1:2, 3, 20, 12), c(4:11, 12), c(13:19, 3, 20, 12) ),
+  mark.col = c(adjustcolor("grey60", alpha.f = 0.8),
+               adjustcolor("grey30", alpha.f = 0.8),
+               adjustcolor("grey80", alpha.f = 0.8)
+  ),
+  mark.border = c( "grey60", "grey30","grey80")
+)
+# legend
+legend( x = "bottomleft", 
+        c("topic 1","topic 2", "topic 3"), 
+        pch=21,
+        col = c("grey60", "grey30","grey80"), 
+        pt.bg = c("grey60", "grey30","grey80"), 
+        pt.cex = 1.5, 
+        cex = 0.8, 
+        bty = "n", 
+        ncol = 1 )
+dev.off()
+
+
+pdf( file = paste0( GraphFile1, "/BTMv2BW_Q5.pdf")
+     # width = 400, height = 400
+)
+plot(
+  net1,
+  layout = layout1,
+  edge.color = "grey60",
+  edge.width = igraph::E(net1)$link.weight * 1,
+  vertex.color = "grey60",
+  vertex.frame.color = "grey40", 
+  vertex.size = igraph::V(net1)$probability * 100,
+  #vertex.label = igraph::V(net1)$media,
+  vertex.label.color = "black",
+  mark.groups = list( c(1:2, 3, 20, 12), c(4:11, 12), c(13:19, 3, 20, 12) ),
+  mark.col = c(adjustcolor("grey60", alpha.f = 0.8),
+               adjustcolor("grey30", alpha.f = 0.8),
+               adjustcolor("grey80", alpha.f = 0.8)
+  ),
+  mark.border = c( "grey60", "grey30","grey80")
+)
+# legend
+legend( x = "bottomleft", 
+        c("topic 1","topic 2", "topic 3"), 
+        pch=21,
+        col = c("grey60", "grey30","grey80"), 
+        pt.bg = c("grey60", "grey30","grey80"), 
+        pt.cex = 1.5, 
+        cex = 0.8, 
+        bty = "n", 
+        ncol = 1 )
+dev.off()
 
 # LDA
 lapply( 2:20,
         function(x) {
-          topicmodels::LDA( tm::as.TermDocumentMatrix( t( as.matrix( 
-            tdm.clean.lemma.NoPunctuation ) ), weighting = tm::weightTf) ,
+          topicmodels::LDA( tm::as.TermDocumentMatrix( 
+            t( as.matrix( 
+            tdm.clean.lemma.NoPunctuation ) ), 
+            weighting = tm::weightTf) ,
             k = x,
             method = "Gibbs",
             control = list( seed =  list(254672,109,122887,145629037,2),
@@ -721,6 +980,41 @@ ggsave( F4,
 
 ggsave( F4,  
         filename = paste0( GraphFile1, "/LDA_topic_6WC_Q5.pdf") )
+
+set.seed(123)
+posterior.topic$terms |> 
+  t() |> 
+  ( function(x) cbind( words = rownames(x), x ) )() |>
+  as.data.frame() |>
+  reshape(
+    direction = "long",
+    varying = colnames( t( posterior.topic$terms ) ),
+    v.names = "probability",
+    timevar = "topic",
+    times = colnames( t( posterior.topic$terms ) )
+  ) |>
+  transform( probability = as.numeric(probability),
+             topic = as.numeric( topic) ) |>
+  dplyr::arrange( desc(probability) ) |>
+  head(40) |>
+  ggplot() +
+  aes(label = words, 
+      size = probability * 10,
+      #     x = topic,
+      angle_group = topic,
+      color = topic ) +
+  geom_text_wordcloud( ) +
+  theme_minimal() +
+  scale_color_brewer(palette = "Set2", name = "Topic" ) -> F4B ; F4B
+
+ggsave( F4B, width = 7, height = 7,
+        filename = paste0( GraphFile1, "/LDAbis_topic_3WC_Q5.png") )
+
+ggsave( F4B,  
+        filename = paste0( GraphFile1, "/LDAbis_topic_3WC_Q5.pdf") )
+
+
+
 
 
 # Stock results --------------
