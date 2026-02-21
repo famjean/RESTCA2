@@ -42,6 +42,10 @@ use_df_printer()
 **Table count: XXX**  
 **Figure count:  XXX**    
 
+
+{{< pagebreak >}}
+
+
 # Supplementary methods    
 
 ## Study design   
@@ -61,28 +65,130 @@ Participants were asked to complete a semi-structured questionnaire. The DSM-5 c
 Participants were asked an open-response question in French: *'Quelque chose vous a-t-il empêché d’obtenir l’aide dont vous aviez besoin au début de votre prise en soin ?  (regard des autres, argent, peur de grossir, stigma, religion, autres… ). Détaillez.'*; English translation: *'Did anything prevent you from getting the help you needed at the beginning of your treatment? (other people's opinions, money, fear of gaining weight, stigma, religion, other reasons, etc.). Please provide details.'*.   
 
 ## Statistical method     
+
 ### Description    
 We described numeric variables using the mean and standard deviation, and categorical variables using percentages and counts. We analysed the sample with no missing values for question about barriers to treatment.  
 
 ### Textual responses preprocessing   
-The set of textual responses was tokenized excluding missing values.  Xxxxx   Then punctuation, numbers, special characters, capital letters, and meaningless words were removed. Next we applied a lemmatization (process of transformed an inflected word to his canonical form).   
+The set of textual responses was tokenized excluding missing values. Then punctuation, numbers, special characters, capital letters, and meaningless words were removed. Next we applied a lemmatization (process of transformed an inflected word to his canonical form).   
 
 ### Natural language processing: main methods   
 First, we calculated the total word count, the mean (and sd) number of words per response, and for all responses the type-token ratio (TTR) and the sparsity. Then, we calculated across the responses the mean TTR and mean sparsity. The TTR is the ratio of word types to words. Sparsity is the ratio of absent words to all used words in the set of responses.     
 
-Secondly, we conducted topic modelling (TP) on the preprocessed set of responses. TP is a statistical model used to discover hidden semantic structures within a body of text. We chose the biterm topic model because it is adapted to short texts, such as the responses we studied, and outperforms other TP techniques [@yanBitermTopicModel2013]. In the supplementary material, we display the results of other techniques.   
+Secondly, we conducted topic modelling (TP) on the preprocessed and filtered on sparsity (threshold of 0.97) set of responses. TP is a statistical model used to discover hidden semantic structures within a body of text. We chose the biterm topic model because it is adapted to short texts, such as the responses we studied, and outperforms other TP techniques [@yanBitermTopicModel2013]. In the supplementary material, we display the results of other techniques.   
 
-Thirdly, we used Generative Pre-trained Transformers (GPT) to automatically analyse the set of responses. GPT is a type of large language model (LLM) used to generate text from a prompt. Raw, rather than pre-processed, data was used for the LLM. The prompt was: *"Analyse et synthètise les réponses à la question 'Quelque chose vous a-t-il empêché d’obtenir l’aide dont vous aviez besoin au début de votre prise en soin ?  (regard des autres, argent, peur de grossir, stigma, religion, autres… ). Détaillez.'. Les réponses à la question sont : xxx Prends en compte que chaque individu a sa réponse après un chiffre et un slash et deux points (exemple : '1/: réponse'). Prends en compte que cette question a été posé à des patients souffrant d'un trouble du comportement alimentaire lors d'une étude clinique. Donne une réponse en moins de 200 mots et plus de 150 mots en anglais. Ne demande pas d'informations complémentaires dans ta réponse. Ne fait pas de commentaires autres dans ta réponse."*. xxx is the response of participants numbered (example: 1/: response of the first participant; 2/: response of the second participant). Seed and temperature were fixed at xxx and xxxx respectively. 
+Thirdly, we used Generative Pre-trained Transformers (GPT) to automatically analyse the set of responses. GPT is a type of large language model (LLM) used to generate text from a prompt. Raw, rather than pre-processed, data was used for the LLM. The prompt was: *"Analyse et synthètise les réponses à la question 'Quelque chose vous a-t-il empêché d’obtenir l’aide dont vous aviez besoin au début de votre prise en soin ?  (regard des autres, argent, peur de grossir, stigma, religion, autres… ). Détaillez.'. Les réponses à la question sont : xxx Prends en compte que chaque individu a sa réponse après un chiffre et un slash et deux points (exemple : '1/: réponse'). Prends en compte que cette question a été posé à des patients souffrant d'un trouble du comportement alimentaire lors d'une étude clinique. Donne une réponse en moins de 200 mots et plus de 150 mots en anglais. Ne demande pas d'informations complémentaires dans ta réponse. Ne fait pas de commentaires autres dans ta réponse."*. xxx is the response of participants numbered (example: 1/: response of the first participant; 2/: response of the second participant). Seed and temperature were fixed at xxx and xxxx respectively. The used code in R is presented below: 
+
+
+**Block of code used to perform GPT**   
+```{r}
+#| eval: false
+
+# Change ..../ with the correct path
+
+# Extract responses
+dataframe$ResponseQ5 |>
+  na.omit() -> vect1 ; 
+
+# Identify participants and collapse responses
+paste( 1:length(vect1), vect1, sep = ": ") |>
+  paste( collapse = "; " ) ->
+  vect1 ;
+
+# Prepare prompt 
+paste0( "Analyse et synthètise les réponses à la question 'Quelque chose vous a-t-il empêché d’obtenir l’aide dont vous aviez besoin au début de votre prise en soin ?  (regard des autres, argent, peur de grossir, stigma, religion, autres… ). Détaillez.'. Les réponses à la question sont : ", vect1 ) ->
+  vect1 ; vect1 ;
+
+paste0( vect1, ". Prends en compte que chaque individu a sa réponse après un chiffre et un slash et deux points (exemple : '1/: réponse'). Prends en compte que cette question a été posé à des patients souffrant d'un trouble du comportement alimentaire lors d'une étude clinique. Donne une réponse en moins de 200 mots et plus de 150 mots en anglais. Ne demande pas d'informations complémentaires dans ta réponse. Ne fait pas de commentaires autres dans ta réponse." ) ->
+  vect1 ; vect1
+
+writeLines( vect1, "..../prompt.txt" )
+
+# Create function for analyzing
+llama_prompt <- function( prompt,
+                         model_path = "..../llama.cpp/build/bin/llama-cli",
+                         model_file = "..../LLM/gemma-3-4b-it-Q8_0.gguf",
+                         directory = getwd(),
+                         temp = 0.5,
+                         seed = 42,
+                         number.of.threads = 1
+                         ) {
+  # Start the timer 
+  tictoc::tic() ;
+  
+  # llama.cpp version 
+  version1_file <- paste0( directory, "/version_llama.txt" )
+  
+  cmd.v <- sprintf(
+    '%s --version > %s 2>&1',
+    model_path,
+    version1_file
+  )
+
+  system( cmd.v )
+  
+  # GPT version 
+  writeLines( model_file, paste0( directory, "/version_GPT.txt" ) )
+  
+  # R version 
+  sessionInfo() |> capture.output() |>
+    writeLines( paste0( directory, "/version_R.txt" ))
+  
+  # Temp file for prompt
+  writeLines(prompt, paste0( directory, "/prompt.txt" ))
+  
+  prompt_file <- paste0( directory, "/prompt.txt" ) 
+  
+  # Temp file for output
+  output_file <- paste0( directory, "/output_llama.txt" )
+  
+  # Main command 
+  cmd <- sprintf(
+    '%s --model %s --file %s --temp %s --seed %s --threads %s --no-conversation  --no-display-prompt --simple-io > %s',
+    model_path,
+    model_file,
+    prompt_file,
+    temp,
+    seed,
+    number.of.threads,
+    output_file
+  )
+  
+  print( cmd )
+  
+  system(cmd)
+  
+  # Import output 
+  result <- readLines( output_file, warn = FALSE )
+  
+  # End the timer
+  tictoc::toc() ;
+  
+  # Return output like string
+  return( paste(result, collapse = "\n") )
+}
+
+# Analyze
+llama_prompt( vect1,
+              model_path = "..../llama.cpp/build/bin/llama-cli",
+              model_file = "..../LLM/gemma-3-4b-it-Q8_0.gguf",
+              directory = "..../",
+              temp = 0.5,
+              seed = 42,
+              number.of.threads = 1 ) -> output ; output ;
+
+```
 
 ### Natural language processing: other methods   
 
-Correlation matrix
+**Word network**   
 
-Réseau de mots
+**Correlation matrix of words**   
 
-Clustering hierarchical 
+**Hierarchical clustering**   
 
-Latent direchtlet association 
+**Latent dirichlet allocation**   
+
 
 ### Versions   
 We used the R language version XXXXXXXX [], llama.cpp version xx [], modelxxx version xxx [], and treetragger 3.2.5 [].   
@@ -94,32 +200,39 @@ We used the R language version XXXXXXXX [], llama.cpp version xx [], modelxxx ve
 
 # Supplementary results    
 
-
 ## Missing data    
 Figure S1 shows the study's flowchart. It presents the number of patients who refused or withdrew from the study, as well as the number of missing values.   
 
 ![](Files_For_Article/FigureS1.png)   
 ### Figure S1: Fdlowchart of the study   
 This figure shows the number of patients at each stage of the study process. Twenty-one patients were lost before the analysis stage.    
-### Table S1:    
-```{r}
-#| echo: false
-tabS1
-```
 
-### Determining the numer of latent topic    
+## Determining the number of latent topic    
 In the Figure S2, we see that the optimal number of latent topic was three.     
 
 ![](Files_For_Article/DAG1.png)   
-### Figure S2:  Evolution of loglikelihood of models from two latent topics to fifteen latent topics     
+### Figure S2:  Evolution of loglikelihood of models from two latent topics to fifteen latent topics for biterm topic modeling        
 The first optimal number of latent topic was at three with the first minimal of loglikelihood.     
 
 
 ## Other NLP methods    
 
 We first
+
 ![](Files_For_Article/DAG1.png)   
-### Figure S3: Correlation semimatrix of words   
+### Figure S3: Word network   
+
+![](Files_For_Article/DAG1.png)   
+### Figure S4: Correlation matrix of words   
+
+![](Files_For_Article/DAG1.png)   
+### Figure S5: Hierarchical clustering with Ward method   
+
+![](Files_For_Article/DAG1.png)   
+### Figure S6: Evolution of loglikelihood of models from two latent topics to fifteen latent topics  for latent dirichlet allocation   
+
+![](Files_For_Article/DAG1.png)   
+### Figure S7: Latent dirichlet allocation 
 
 
 {{< pagebreak >}}

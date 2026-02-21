@@ -1002,7 +1002,7 @@ posterior.topic$terms |>
       size = probability * 10,
       #     x = topic,
       angle_group = topic,
-      color = topic ) +
+      color = factor(topic) ) +
   geom_text_wordcloud( ) +
   theme_minimal() +
   scale_color_brewer(palette = "Set2", name = "Topic" ) -> F4B ; F4B
@@ -1279,7 +1279,7 @@ rm( name, a, tmp.file2 ) ;
 #~~~~~~~~~~~~~~~~~~~~~~
 
 # Save objects
-save( list = names(Objects.ToExport.list1),  
+save( list = names(Objects.ToExport.list1)[  names(Objects.ToExport.list1) != ""],  
       file = "~/Desktop/Results/RESTCA2_ObjectsForLinkScript.RData" )
 
 

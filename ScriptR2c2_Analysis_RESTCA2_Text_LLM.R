@@ -266,7 +266,7 @@ llama_prompt <- function( prompt,
 
   system( cmd.v )
   
-  # version R
+  # version GPT
   writeLines( model_file, paste0( directory, "/version_GPT.txt" ))
   
   # version R

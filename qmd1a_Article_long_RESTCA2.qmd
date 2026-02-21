@@ -138,7 +138,7 @@ Eating disorders (ED) are mental health conditions characterized by a disrupted 
 
 In a 2021 meta-analysis [Qian et al.], Qian et al. reported a combined lifetime prevalence of 0.91% (95% confidence interval - 95%CI: 0.48-1.71) for ED. Prevalence varied between studies, ranging from 0.1% to 3.8%. Western countries demonstrated higher prevalence rates than Asian countries (p < 0.001). The combined lifetime prevalences were 0.16% (95%CI: 0.06–0.31) for anorexia nervosa, 0.63% (95% CI: 0.33–1.02) for bulimia nervosa, and 1.53% (95% CI: 1.00–2.17) for binge-eating disorder. ED deserve special attention because they are associated with the highest mortality rate among mental disorders [Arcelus et al., 2011; Iwajomo et al., 2021; van Hoeken & Hoek, 2020] and because their prevalence increased after the Coronavirus Disease 2019 (COVID-19) pandemic  [https://www.jahonline.org/article/S1054-139X(25)00263-0/fulltext  https://pmc.ncbi.nlm.nih.gov/articles/PMC7612698/  https://www.mdpi.com/2673-8112/4/11/119].    
 
-The delay between the ED onset and treatment-seeking is an important point [https://pmc.ncbi.nlm.nih.gov/articles/PMC10710219/ ]. Early interventions lead to better outcomes [https://pubmed.ncbi.nlm.nih.gov/32064663/  https://pubmed.ncbi.nlm.nih.gov/33781000/] and decrease healtcare costs [https://pubmed.ncbi.nlm.nih.gov/29602325/  https://pubmed.ncbi.nlm.nih.gov/28152200/ ] . Nevertheless, the delay could be substantial as reported in an australian study with an average delay of 5.28 years [https://pubmed.ncbi.nlm.nih.gov/34250844/]. Identifying barriers to treatment is fundamental for these reasons.   
+The delay between the ED onset and treatment-seeking is an important point [https://pmc.ncbi.nlm.nih.gov/articles/PMC10710219/ ]. Early interventions lead to better outcomes [https://pubmed.ncbi.nlm.nih.gov/32064663/  https://pubmed.ncbi.nlm.nih.gov/33781000/] and decrease healtcare costs [https://pubmed.ncbi.nlm.nih.gov/29602325/  https://pubmed.ncbi.nlm.nih.gov/28152200/ ] . Nevertheless, the delay could be substantial as reported in an australian study with an average delay of 5.28 years [@hamiltonUnderstandingTreatmentDelay2022]. Identifying barriers to treatment is fundamental for these reasons.   
    
 The challenge is to determine how identifying the barriers to treatment. Deterministic questions, such as multiple choice questions, depend on the researcher's hypotheses and knowledge. Open-answer questions allow patients to share their ideas. Specific methodologies exist to treat open-ended responses [https://pubmed.ncbi.nlm.nih.gov/37055353/], but methodologies based on human work are limited when the sample size increases. 
 
@@ -252,37 +252,22 @@ In the supplementary material, we display the results of other NLP methods.
 **Summary of findings**     
 In the statement of 43 patients, both TP and GPT identified few barriers to treatment-seeking. These barriers were fear of judgment of other, fear of gaining weight, fear of reaction and lack of understanding of the loved ones, denial of the illness, and fear of the caregiving. GPT seems to be more accurate on some aspects in comparison of TP and found topics like financial concerns, difficulty to access to specialized cares, and geographical limitations. 
 
-**Strengths and limitations**  
+**Strengths and limitations**    
+The strengths of the study were the use of freely expressed statements of patients and of advanced tools to analyse them. The main limitation was that we interrogated participants who have been included in care and that we did not include participants who have given up on treatment. Other limitations were the small sample size, the limited area of inclusion, and possible misinterpretation induced by the tool we used.   
 
-**Comparison with other studies and interpretation**  
-
-https://pmc.ncbi.nlm.nih.gov/articles/PMC8978368/
-
-https://pmc.ncbi.nlm.nih.gov/articles/PMC10228357/
-
-https://pmc.ncbi.nlm.nih.gov/articles/PMC10552972/
-
-https://pmc.ncbi.nlm.nih.gov/articles/PMC10241369/
-
-https://pmc.ncbi.nlm.nih.gov/articles/PMC10710219/
-
-https://pubmed.ncbi.nlm.nih.gov/34250844/
+**Comparison with other studies**     
+In other studies, denial [@millsNarrativeReviewEarly2023], personnal reluctance [@liuPerspectivesBarriersTreatment2022; @millsNarrativeReviewEarly2023], stigma [@liuPerspectivesBarriersTreatment2022; @goelWhatWillPeople2023: @hamiltonUnderstandingTreatmentDelay2022], lack of support [@liuPerspectivesBarriersTreatment2022; @monteleonePathwaysEatingDisorder2023; @goelWhatWillPeople2023], fear [@liuPerspectivesBarriersTreatment2022], geographical isolation [@botteraEatingDisorderTreatment2023], limited treatment options/waitlist [@millsNarrativeReviewEarly2023], and health literacy [@liuPerspectivesBarriersTreatment2022; @monteleonePathwaysEatingDisorder2023; @goelWhatWillPeople2023] were implicated as barriers to treatment-seeking. 
 
 **Implications, unanswered questions and future research**    
-Donne le même résultat. Sauf que plus direct lisible. Moins soumis à la détermination des thématiques. Plus détaillé. Mais est ce que ces détails qui touche moins de 10% des personnes sont parfois important ou jamais. Dépend du domaine. 
-
-
-Overpassing barriers to treatment could lead to earlier interventions and better outcomes [https://pubmed.ncbi.nlm.nih.gov/32064663/  https://pubmed.ncbi.nlm.nih.gov/33781000/]. Furthermore, pecific therapy for early intervention have been created like FREED for First Episode and Rapid Early Intervention for Eating Disorder
-[https://pubmed.ncbi.nlm.nih.gov/27619198/]
+GPT and TP give similar results, although TP is less detailed. Are these additional details meaningful and important? Perhaps it depends on the field being analysed. Overpassing barriers to treatment could lead to earlier interventions and better outcomes [https://pubmed.ncbi.nlm.nih.gov/32064663/, https://pubmed.ncbi.nlm.nih.gov/33781000/]. Furthermore, specific therapies for early intervention have been created, like FREED for First Episode and Rapid Early Intervention for Eating Disorders [https://pubmed.ncbi.nlm.nih.gov/27619198/].
 
 **Conclusion**   
-!!!!!Some of the barriers depends of the symptoms of ED like fear of gaining weight or fear of other judgement and could not be reached. Other barriers like fear of lack of understanding or negative reaction of loved ones could be the target of prevention interventions. More other barriers could be overpass with a lot of difficulty due to the cost like the geographical limitations and the difficulty to access to specialized cares. ¡!!!!!!!!!!!
+Some of the barriers depend on the symptoms of ED, like fear of gaining weight or fear of other judgements, and could not be reached. Other barriers, like fear of lack of understanding or negative reaction of loved ones, could be the target of prevention interventions. More other barriers could be overpass with a lot of difficulty due to the cost, like the geographical limitations and the difficulty to access to specialized cares. GPT seems at least equal to TP, if not surpassing it. Years of learning and experience in the use of statistics could be matched by a basic knowledge of Unix system and less than 100 lines of code thanks to GPT.   
 
 {{< pagebreak >}}
 
-![](Files_For_Article/DAG1.png)   
-**Figure 1: **  
- 
+**Figure 1: Representation of topic modeling and word network**     
+The figure shows the words the most probable for the three kept topics, with the size of the circle proportioned with the posterior probability for the topic, or the mean of the posterior probability for the topics if the word was in more than one topic. The coloured shapes regroup the words for each topic and can overlap. The link between the words represents the number of times the words were together in the same answers. There was no link if they were never in the same response and the width of the link was great if they were frequently in the same responses. We identified the next topics: 1/ fear of other people's judgement and of gaining weight; 2/ fear of loved ones, of disappointing them, of loved ones not understanding, and of being sick; 3/ fear of weight, of having to eat, of having to do, and denial. We could interpret: 1/ core symptoms of ED, 2/ fear of the judgement of loved ones and of being sick, 3/ fear of obligation in caregiving and denial. We can see that words were connected even if they were not in the same topic, meaning that topics could be associated in the same responses.        
 
 {{< pagebreak >}}
 
